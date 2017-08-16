@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/EditorMainLayoutStyle">
+
+    <LinearLayout
+        style="@style/EditorBlockStyle">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/editor_heading_basic" />
+
+        <LinearLayout
+            style="@style/EditorEntryBlockStyle">
+
+            <EditText
+                style="@style/EditorFieldStyle"
+                android:hint="@string/item_name_hint"/>
+
+            <EditText
+                style="@style/EditorFieldStyle"
+                android:hint="@string/item_insuline_hint"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/EditorBlockStyle">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/editor_heading_additional" />
+
+        <LinearLayout
+            style="@style/EditorEntryBlockStyle">
+
+            <EditText
+                style="@style/EditorFieldStyle"
+                android:hint="@string/item_desc_hint"/>
+
+            <EditText
+                style="@style/EditorFieldStyle"
+                android:hint="@string/glucose_level_2h_later_hint"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

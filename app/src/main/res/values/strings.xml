@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Insulina</string>
+    <string name="add_item_heading">Nowy wpis</string>
+    <string name="item_name_hint">Nazwa produktu</string>
+    <string name="item_insuline_hint">Liczba jednostek</string>
+    <string name="editor_heading_basic">Informacje podstawowe</string>
+    <string name="editor_heading_additional">Informacje dodatkowe</string>
+    <string name="item_desc_hint">Opis produktu (opcjonalne)</string>
+    <string name="glucose_level_2h_later_hint">Poziom cukru 2h później (opcjonalne)</string>
+</resources>

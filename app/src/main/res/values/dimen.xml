@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="action_button_margin">20dp</dimen>
+    <dimen name="edit_main_layout_padding">16dp</dimen>
+    <dimen name="zero_dp_weight_height">0dp</dimen>
+    <dimen name="editor_block_bottom_margin">24dp</dimen>
+</resources>
