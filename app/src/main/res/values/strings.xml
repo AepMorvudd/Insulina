@@ -7,4 +7,8 @@
     <string name="editor_heading_additional">Informacje dodatkowe</string>
     <string name="item_desc_hint">Opis produktu (opcjonalne)</string>
     <string name="glucose_level_2h_later_hint">Poziom cukru 2h później (opcjonalne)</string>
+    <string name="empty_list_heading">Lista jest pusta.</string>
+    <string name="empty_list_hint">Dodaj jakieś wartości.</string>
+    <string name="item_name">Nazwa</string>
+    <string name="item_insuline_intake">Ilość jednostek</string>
 </resources>

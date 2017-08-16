@@ -17,19 +17,38 @@
 
     <!-- Main Activity Layout Styles-->
 
-    <!-- Major Layout Style -->
     <style name="MainActivityMajorStyle">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!-- Floating Action Button Style -->
     <style name="FloatingButton">
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_margin">@dimen/action_button_margin</item>
+    </style>
+
+    <style name="EmptyLayoutStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="EmptyListHeadingStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="EmptyListHintStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:paddingTop">@dimen/empty_list_padding_top</item>
     </style>
 
     <!-- Add a new Entry styles -->
@@ -75,5 +94,35 @@
         <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_weight">2</item>
+    </style>
+
+    <!-- Item Detail Styles -->
+
+    <style name="ItemDetailMajorStyle">
+        <item name="android:layout_height">@dimen/item_detail_major_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ItemNameStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_margin">@dimen/item_name_and_desc_layout_margin</item>
+        <item name="android:paddingLeft">@dimen/item_name_padding_left</item>
+    </style>
+
+    <style name="ItemDescStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_margin">@dimen/item_name_and_desc_layout_margin</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

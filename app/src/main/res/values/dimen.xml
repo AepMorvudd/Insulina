@@ -4,4 +4,8 @@
     <dimen name="edit_main_layout_padding">16dp</dimen>
     <dimen name="zero_dp_weight_height">0dp</dimen>
     <dimen name="editor_block_bottom_margin">24dp</dimen>
+    <dimen name="empty_list_padding_top">8dp</dimen>
+    <dimen name="item_detail_major_height">60dp</dimen>
+    <dimen name="item_name_and_desc_layout_margin">10dp</dimen>
+    <dimen name="item_name_padding_left">10dp</dimen>
 </resources>
