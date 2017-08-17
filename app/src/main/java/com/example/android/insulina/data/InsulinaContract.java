@@ -10,8 +10,6 @@ public final class InsulinaContract {
         //Table name
         public static final String TABLE_NAME = "insulina";
 
-        //Column names
-
         // Column ID
         public static final String _ID = BaseColumns._ID;
 
