@@ -13,7 +13,7 @@ public class InsulinaDbHelper extends SQLiteOpenHelper{
     public InsulinaDbHelper (Context context) {super(context, DATABASE_NAME, null, DATABASE_VERSION); }
 
     /*
-    Creates a new Database entry
+    Creates a new Database
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -21,7 +21,7 @@ public class InsulinaDbHelper extends SQLiteOpenHelper{
                 + InsulinaContract.InsulinaEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME + " TEXT NOT NULL, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE + " INTEGER NOT NULL, "
-                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION + "TEXT, "
+                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION + " TEXT, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER + " INTEGER);";
 
         db.execSQL(SQL_CREATE_ENTRIES);

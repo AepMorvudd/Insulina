@@ -14,10 +14,12 @@
             style="@style/EditorEntryBlockStyle">
 
             <EditText
+                android:id="@+id/item_name_edit_text"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/item_name_hint"/>
 
             <EditText
+                android:id="@+id/item_jednostki_edit_text"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/item_insuline_hint"/>
         </LinearLayout>
@@ -34,10 +36,12 @@
             style="@style/EditorEntryBlockStyle">
 
             <EditText
+                android:id="@+id/item_description_edit_text"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/item_desc_hint"/>
 
             <EditText
+                android:id="@+id/item_glucose_edit_text"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/glucose_level_2h_later_hint"/>
         </LinearLayout>

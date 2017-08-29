@@ -11,4 +11,5 @@
     <string name="empty_list_hint">Dodaj jakieś wartości.</string>
     <string name="item_name">Nazwa</string>
     <string name="item_insuline_intake">Ilość jednostek</string>
+    <string name="menu_save">Zapisz</string>
 </resources>
