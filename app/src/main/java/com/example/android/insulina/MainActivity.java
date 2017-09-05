@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.example.android.insulina.data.InsulinaContract;
 import com.example.android.insulina.data.InsulinaDbHelper;
 
+import static android.icu.text.MessagePattern.ArgType.SELECT;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -50,14 +52,61 @@ public class MainActivity extends AppCompatActivity {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + InsulinaContract.InsulinaEntry.TABLE_NAME, null);
+        // Define a projection
+        String[] projection = {
+                InsulinaContract.InsulinaEntry._ID,
+                InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME,
+                InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE,
+                InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION,
+                InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER
+        };
+
+        // Perform a query on SQL
+        Cursor cursor = db.query(
+                InsulinaContract.InsulinaEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.text_view_pet);
             displayView.setText("Number of rows in insuline database table: " + cursor.getCount());
+            displayView.append("\n" + InsulinaContract.InsulinaEntry._ID + " - "
+                    + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME + " - "
+                    + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE + " - "
+                    + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION + " - "
+                    + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER
+                    + "\n");
+
+            // Figures out index of each column
+            int idColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry._ID);
+            int nameColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME);
+            int intakeColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE);
+            int descriptionColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION);
+            int laterColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                int currentID = cursor.getInt(idColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+                int currentIntake = cursor.getInt(intakeColumnIndex);
+                String currentDescription = cursor.getString(descriptionColumnIndex);
+                int currentLaterGlucose = cursor.getInt(laterColumnIndex);
+
+                // Appends the TextView
+                displayView.append("\n" + currentID + " - "
+                        + currentName + " - "
+                        + currentIntake + " - "
+                        + currentDescription + " - "
+                        + currentLaterGlucose);
+            }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
