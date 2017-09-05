@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.example.android.insulina.data.InsulinaContract;
 import com.example.android.insulina.data.InsulinaDbHelper;
 
-import static android.icu.text.MessagePattern.ArgType.SELECT;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

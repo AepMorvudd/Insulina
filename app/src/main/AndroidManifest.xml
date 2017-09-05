@@ -26,6 +26,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.example.android.insulina"
+            android:name=".data.InsulinaProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
