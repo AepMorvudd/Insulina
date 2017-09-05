@@ -1,12 +1,22 @@
 package com.example.android.insulina.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class InsulinaContract {
 
     private InsulinaContract() {}
 
+    public static final String CONTENT_AUTHORITY = "com.example.android.insulina";
+
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    public static final String PATH_INSULINA = "insulina";
+
     public static class InsulinaEntry implements BaseColumns {
+        // Complete URI
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_INSULINA);
+
         //Table name
         public static final String TABLE_NAME = "insulina";
 
