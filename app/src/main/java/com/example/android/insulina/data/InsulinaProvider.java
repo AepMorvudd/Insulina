@@ -25,6 +25,11 @@ public class InsulinaProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    static {
+        sUriMatcher.addURI(InsulinaContract.CONTENT_AUTHORITY, InsulinaContract.PATH_INSULINA, INSUL);
+        sUriMatcher.addURI(InsulinaContract.CONTENT_AUTHORITY, InsulinaContract.PATH_INSULINA + "/#", INSUL_ID);
+    }
+
     @Override
     public boolean onCreate() {
         mDbHelper = new InsulinaDbHelper(getContext());

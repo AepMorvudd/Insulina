@@ -2,7 +2,6 @@ package com.example.android.insulina;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.insulina.data.InsulinaContract;
-import com.example.android.insulina.data.InsulinaDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,12 +41,6 @@ public class MainActivity extends AppCompatActivity {
      * the pets database.
      */
     private void displayDatabaseInfo() {
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
-        InsulinaDbHelper mDbHelper = new InsulinaDbHelper(this);
-
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // Define a projection
         String[] projection = {
@@ -59,16 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER
         };
 
-        // Perform a query on SQL
-        Cursor cursor = db.query(
-                InsulinaContract.InsulinaEntry.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        Cursor cursor = getContentResolver().query(InsulinaContract.InsulinaEntry.CONTENT_URI, projection, null,null, null);
 
         TextView displayView = (TextView) findViewById(R.id.text_view_pet);
 
