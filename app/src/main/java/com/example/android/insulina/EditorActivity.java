@@ -1,7 +1,7 @@
 package com.example.android.insulina;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.insulina.data.InsulinaContract;
-import com.example.android.insulina.data.InsulinaDbHelper;
 
 public class EditorActivity extends AppCompatActivity{
 
@@ -28,12 +27,6 @@ public class EditorActivity extends AppCompatActivity{
         int jednostki = Integer.parseInt(jednostkiString);
         int cukier = Integer.parseInt(cukierString);
 
-        // Creates DB Helper
-        InsulinaDbHelper mDbHelper = new InsulinaDbHelper(this);
-
-        // Gets the DB in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         // Creates ContentValues object
         ContentValues values = new ContentValues();
         values.put(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME, nameString);
@@ -41,12 +34,12 @@ public class EditorActivity extends AppCompatActivity{
         values.put(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION, opisString);
         values.put(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER, cukier);
 
-        long newRowId = db.insert(InsulinaContract.InsulinaEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(InsulinaContract.InsulinaEntry.CONTENT_URI, values);
 
-        if (newRowId == -1) {
+        if (newUri == null) {
             Toast.makeText(this, "Error with saving entry", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Entry saved with id: " + newRowId, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Entry saved.", Toast.LENGTH_LONG).show();
         }
     }
 

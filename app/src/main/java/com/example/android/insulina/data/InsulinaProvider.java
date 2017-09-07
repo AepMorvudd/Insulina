@@ -9,12 +9,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by user on 05.09.2017.
  */
 
 public class InsulinaProvider extends ContentProvider {
+    // Tag for the log messages
+    public static final String LOG_TAG = InsulinaProvider.class.getSimpleName();
 
     // DB Helper object
     private InsulinaDbHelper mDbHelper;
@@ -79,7 +82,13 @@ public class InsulinaProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INSUL:
+                return insertEntry(uri, values);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
     }
 
     @Override
@@ -90,5 +99,20 @@ public class InsulinaProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
+    }
+
+    private Uri insertEntry(Uri uri, ContentValues values) {
+        // Get writable DB
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Insert new Entry with give values
+        long id = database.insert(InsulinaContract.InsulinaEntry.TABLE_NAME, null, values);
+        // If the ID is -1, then the insertion failed. Log an error and return null.
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+        // Return the new URI with the ID (of the newly inserted row) appended at the end
+        return ContentUris.withAppendedId(uri, id);
     }
 }
