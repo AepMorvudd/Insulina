@@ -93,18 +93,58 @@ public class InsulinaProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        //Get Writable DB
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        final int match = sUriMatcher.match(uri);
+        switch(match) {
+            case INSUL:
+                return database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+            case INSUL_ID:
+                selection = InsulinaContract.InsulinaEntry._ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                return database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        switch(match) {
+            case INSUL:
+                return updateEntry(uri, values, selection, selectionArgs);
+            case INSUL_ID:
+                selection = InsulinaContract.InsulinaEntry._ID;
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                return updateEntry(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
     }
 
     private Uri insertEntry(Uri uri, ContentValues values) {
+        // Sanity check for all the data inserted
+        String name = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME);
+        if(name == null) {
+            throw new IllegalArgumentException("Entry requires a name");
+        }
+        int insrtion = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE);
+        if(insrtion == 0) {
+            throw new IllegalArgumentException("Need to add insuline intake ammount");
+        }
+        String descrption = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION);
+        if(descrption == null) {
+            throw new IllegalArgumentException("Need to add a description");
+        }
+        int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
+        if(latrGluco == 0) {
+            throw new IllegalArgumentException("Need to add glucose level 2h later");
+        }
+
         // Get writable DB
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
         // Insert new Entry with give values
         long id = database.insert(InsulinaContract.InsulinaEntry.TABLE_NAME, null, values);
         // If the ID is -1, then the insertion failed. Log an error and return null.
@@ -114,5 +154,31 @@ public class InsulinaProvider extends ContentProvider {
         }
         // Return the new URI with the ID (of the newly inserted row) appended at the end
         return ContentUris.withAppendedId(uri, id);
+    }
+
+    private int updateEntry(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        // Sanity check for all the data inserted
+        String name = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME);
+        if(name == null) {
+            throw new IllegalArgumentException("Entry requires a name");
+        }
+        int insrtion = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE);
+        if(insrtion == 0) {
+            throw new IllegalArgumentException("Need to add insuline intake ammount");
+        }
+        String descrption = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION);
+        if(descrption == null) {
+            throw new IllegalArgumentException("Need to add a description");
+        }
+        int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
+        if(latrGluco == 0) {
+            throw new IllegalArgumentException("Need to add glucose level 2h later");
+        }
+
+        // Gets writable DB
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int id = database.update(InsulinaContract.InsulinaEntry.TABLE_NAME, values, selection, selectionArgs);
+        return id;
     }
 }
