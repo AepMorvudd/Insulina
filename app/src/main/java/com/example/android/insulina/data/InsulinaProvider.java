@@ -76,7 +76,15 @@ public class InsulinaProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch(match) {
+            case INSUL:
+                return InsulinaContract.InsulinaEntry.CONTENT_LIST_TYPE;
+            case INSUL_ID:
+                return InsulinaContract.InsulinaEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     @Nullable
