@@ -3,10 +3,10 @@
     style="@style/ItemDetailMajorStyle">
 
     <TextView
-        style="@style/ItemNameStyle"
-        android:text="@string/item_name"/>
+        android:id="@+id/display_name"
+        style="@style/ItemNameStyle" />
 
     <TextView
-        style="@style/ItemDescStyle"
-        android:text="@string/item_insuline_intake"/>
+        android:id="@+id/display_intake"
+        style="@style/ItemDescStyle" />
 </LinearLayout>
