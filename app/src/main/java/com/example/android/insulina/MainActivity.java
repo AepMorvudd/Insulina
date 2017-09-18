@@ -1,6 +1,8 @@
 package com.example.android.insulina;
 
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +12,9 @@ import android.widget.ListView;
 
 import com.example.android.insulina.data.InsulinaContract;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int INSULINA_LOADER = 0;
 
     InsulinaCursorAdapter mCursorAdapter;
 
@@ -27,21 +31,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ListView itemsList = (ListView) findViewById(R.id.listViewId);
+        mCursorAdapter = new InsulinaCursorAdapter(this, null);
+        itemsList.setAdapter(mCursorAdapter);
+
+        View emptyView = findViewById(R.id.emptyInventoryId);
+        itemsList.setEmptyView(emptyView);
+
+        getLoaderManager().initLoader(INSULINA_LOADER, null, this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        displayDatabaseInfo();
     }
 
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the pets database.
-     */
-    private void displayDatabaseInfo() {
-
-        ListView itemsList = (ListView) findViewById(R.id.listViewId);
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Define a projection
         String[] projection = {
                 InsulinaContract.InsulinaEntry._ID,
@@ -51,13 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER
         };
 
-        Cursor cursor = getContentResolver().query(InsulinaContract.InsulinaEntry.CONTENT_URI, projection, null,null, null);
+        return new CursorLoader(this,
+                InsulinaContract.InsulinaEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
+    }
 
-        mCursorAdapter = new InsulinaCursorAdapter(this, cursor);
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
 
-        itemsList.setAdapter(mCursorAdapter);
-
-        View emptyView = findViewById(R.id.emptyInventoryId);
-        itemsList.setEmptyView(emptyView);
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }
