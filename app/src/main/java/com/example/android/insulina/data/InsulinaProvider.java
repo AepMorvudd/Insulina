@@ -11,10 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-/**
- * Created by user on 05.09.2017.
- */
-
 public class InsulinaProvider extends ContentProvider {
     // Tag for the log messages
     public static final String LOG_TAG = InsulinaProvider.class.getSimpleName();
@@ -70,6 +66,8 @@ public class InsulinaProvider extends ContentProvider {
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
 
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return cursor;
     }
 
@@ -104,17 +102,26 @@ public class InsulinaProvider extends ContentProvider {
         //Get Writable DB
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
+        int rowsDeleted;
+
         final int match = sUriMatcher.match(uri);
         switch(match) {
             case INSUL:
-                return database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             case INSUL_ID:
                 selection = InsulinaContract.InsulinaEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
-                return database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(InsulinaContract.InsulinaEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
+
+        if(rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
@@ -160,6 +167,8 @@ public class InsulinaProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
+        // Update CursotrLoader with information that something has changed
+        getContext().getContentResolver().notifyChange(uri, null);
         // Return the new URI with the ID (of the newly inserted row) appended at the end
         return ContentUris.withAppendedId(uri, id);
     }
@@ -187,6 +196,10 @@ public class InsulinaProvider extends ContentProvider {
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         int id = database.update(InsulinaContract.InsulinaEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        // Update CursotrLoader with information that something has changed
+        getContext().getContentResolver().notifyChange(uri, null);
+
         return id;
     }
 }
