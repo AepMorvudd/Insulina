@@ -1,6 +1,7 @@
 package com.example.android.insulina;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,16 @@ public class EditorActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_information);
+
+        // sets Proper heading for EditorsActivitity
+        // Wether it's Editing or Entering a enw pet
+        Intent intent = getIntent();
+        Uri currentInsulinaUri = intent.getData();
+        if(currentInsulinaUri == null) {
+            setTitle(R.string.add_item_heading);
+        } else {
+            setTitle(R.string.edit_item_heading);
+        }
 
         mNameEditText = (EditText) findViewById(R.id.item_name_edit_text);
         mJednostkiEditText = (EditText) findViewById(R.id.item_jednostki_edit_text);

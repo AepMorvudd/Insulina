@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Insulina</string>
     <string name="add_item_heading">Nowy wpis</string>
+    <string name="edit_item_heading">Edytuj wpis</string>
     <string name="item_name_hint">Nazwa produktu</string>
     <string name="item_insuline_hint">Liczba jednostek</string>
     <string name="editor_heading_basic">Informacje podstawowe</string>

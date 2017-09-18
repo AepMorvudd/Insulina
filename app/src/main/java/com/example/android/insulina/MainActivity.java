@@ -1,13 +1,16 @@
 package com.example.android.insulina;
 
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.insulina.data.InsulinaContract;
@@ -38,6 +41,18 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
         View emptyView = findViewById(R.id.emptyInventoryId);
         itemsList.setEmptyView(emptyView);
+
+        itemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Uri currentInsulinaUri = ContentUris.withAppendedId(InsulinaContract.InsulinaEntry.CONTENT_URI, id);
+
+                intent.setData(currentInsulinaUri);
+
+                startActivity(intent);
+            }
+        });
 
         getLoaderManager().initLoader(INSULINA_LOADER, null, this);
     }
