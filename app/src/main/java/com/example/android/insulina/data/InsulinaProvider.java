@@ -131,7 +131,7 @@ public class InsulinaProvider extends ContentProvider {
             case INSUL:
                 return updateEntry(uri, values, selection, selectionArgs);
             case INSUL_ID:
-                selection = InsulinaContract.InsulinaEntry._ID;
+                selection = InsulinaContract.InsulinaEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 return updateEntry(uri, values, selection, selectionArgs);
             default:
