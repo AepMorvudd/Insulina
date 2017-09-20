@@ -43,6 +43,7 @@ public final class InsulinaContract {
         Integer, can not be left empty
          */
         public static final String COLUMN_INSULINA_INTAKE = "jednostki";
+        // TODO Change above input type to DOUBLE
 
         /*
         Short description

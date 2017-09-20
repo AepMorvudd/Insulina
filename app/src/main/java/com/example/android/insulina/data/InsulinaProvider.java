@@ -146,15 +146,11 @@ public class InsulinaProvider extends ContentProvider {
             throw new IllegalArgumentException("Entry requires a name");
         }
         int insrtion = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE);
-        if(insrtion == 0) {
+        if(insrtion <= 0) {
             throw new IllegalArgumentException("Need to add insuline intake ammount");
         }
-        String descrption = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION);
-        if(descrption == null) {
-            throw new IllegalArgumentException("Need to add a description");
-        }
         int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
-        if(latrGluco == 0) {
+        if(latrGluco <= -1) {
             throw new IllegalArgumentException("Need to add glucose level 2h later");
         }
 
@@ -183,12 +179,8 @@ public class InsulinaProvider extends ContentProvider {
         if(insrtion == 0) {
             throw new IllegalArgumentException("Need to add insuline intake ammount");
         }
-        String descrption = values.getAsString(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION);
-        if(descrption == null) {
-            throw new IllegalArgumentException("Need to add a description");
-        }
         int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
-        if(latrGluco == 0) {
+        if(latrGluco <= -1) {
             throw new IllegalArgumentException("Need to add glucose level 2h later");
         }
 

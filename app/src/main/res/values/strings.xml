@@ -13,4 +13,11 @@
     <string name="item_name">Nazwa</string>
     <string name="item_insuline_intake">Ilość jednostek</string>
     <string name="menu_save">Zapisz</string>
+
+    <!-- Toast messages -->
+    <string name="empty_values_toast">Wartość w polach Nazwa produktu i Liczba jednostek nie może być pusta</string>
+    <string name="toast_entry_saved">Wpis zapisany</string>
+    <string name="toast_entry_not_saved">Błąd przy zapisywaniu</string>
+    <string name="toast_entry_updated">Wpis zaktualizowany</string>
+    <string name="toast_entry_not_updated">Błąd przy aktualizacji wpisu</string>
 </resources>
