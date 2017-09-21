@@ -1,49 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/EditorMainLayoutStyle">
 
-    <LinearLayout
-        style="@style/EditorBlockStyle">
-
-        <TextView
-            style="@style/CategoryStyle"
-            android:text="@string/editor_heading_basic" />
+    <LinearLayout style="@style/EditorBlockStyle">
 
         <LinearLayout
-            style="@style/EditorEntryBlockStyle">
+            style="@style/ImageAndInformationPrimaryLayoutStyle">
+
+            <TextView
+                style="@style/CategoryStylePrimary"
+                android:text="@string/editor_heading_basic" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add_a_photo_black_48dp"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/EditorEntryBlockStyle">
+
+            <TextView
+                android:id="@+id/object_product_name"
+                style="@style/FliedsDescriptionStyle"
+                android:text="@string/item_name_hint" />
 
             <EditText
                 android:id="@+id/item_name_edit_text"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/item_name_hint"/>
+                android:hint="@string/item_name_hint" />
+
+            <TextView
+                android:id="@+id/object_intake"
+                style="@style/FliedsDescriptionStyle"
+                android:text="@string/item_insuline_hint" />
 
             <EditText
                 android:id="@+id/item_jednostki_edit_text"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/item_insuline_hint"/>
+                android:hint="@string/item_insuline_hint" />
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/EditorBlockStyle">
+    <LinearLayout style="@style/EditorBlockStyle">
 
         <TextView
             style="@style/CategoryStyle"
             android:text="@string/editor_heading_additional" />
 
-        <LinearLayout
-            style="@style/EditorEntryBlockStyle">
+        <ScrollView style="@style/ScrollViewStyle">
 
-            <EditText
-                android:id="@+id/item_description_edit_text"
-                style="@style/EditorFieldStyle"
-                android:hint="@string/item_desc_hint"/>
+            <LinearLayout style="@style/EditorEntryBlockStyleAdditional">
 
-            <EditText
-                android:id="@+id/item_glucose_edit_text"
-                style="@style/EditorFieldStyle"
-                android:hint="@string/glucose_level_2h_later_hint"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/object_desc"
+                    style="@style/FliedsDescriptionStyle"
+                    android:text="@string/item_desc_hint" />
+
+                <EditText
+                    android:id="@+id/item_description_edit_text"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/item_desc_hint" />
+
+                <TextView
+                    android:id="@+id/object_glucose_later"
+                    style="@style/FliedsDescriptionStyle"
+                    android:text="@string/glucose_level_2h_later_hint" />
+
+                <EditText
+                    android:id="@+id/item_glucose_edit_text"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/glucose_level_2h_later_hint" />
+
+                <TextView
+                    android:id="@+id/object_glucose_before"
+                    style="@style/FliedsDescriptionStyle"
+                    android:text="@string/glucose_before_hint" />
+
+                <EditText
+                    android:id="@+id/item_glucose_before"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/glucose_before_hint" />
+
+                <TextView
+                    android:id="@+id/object_intake_to_down"
+                    style="@style/FliedsDescriptionStyle"
+                    android:text="@string/intake_to_get_down_hint" />
+
+                <EditText
+                    android:id="@+id/intake_to_get_down"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/intake_to_get_down_hint" />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>
