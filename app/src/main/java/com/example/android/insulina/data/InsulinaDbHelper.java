@@ -20,9 +20,11 @@ public class InsulinaDbHelper extends SQLiteOpenHelper{
         String SQL_CREATE_ENTRIES = "CREATE TABLE " + InsulinaContract.InsulinaEntry.TABLE_NAME + " ("
                 + InsulinaContract.InsulinaEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_NAME + " TEXT NOT NULL, "
-                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE + " INTEGER NOT NULL, "
+                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE + " DOUBLE NOT NULL, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION + " TEXT, "
-                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER + " INTEGER NOT NULL DEFAULT 0);";
+                + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER + " INTEGER NOT NULL DEFAULT 0, "
+                + InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE + " INTEGER NOT NULL DEFAULT 0, "
+                + InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN + " DOUBLE NOT NULL DEFAULT 0.0);";
 
         db.execSQL(SQL_CREATE_ENTRIES);
     }

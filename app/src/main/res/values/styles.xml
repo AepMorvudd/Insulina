@@ -64,6 +64,34 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <!-- Style for a category in the editor -->
+    <style name="CategoryStylePrimary">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <!-- Primary information and image layout Style -->
+    <style name="ImageAndInformationPrimaryLayoutStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Style for Fields Description -->
+    <style name="FliedsDescriptionStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
     <!-- Style for an EditText field in the editor -->
     <style name="EditorFieldStyle">
         <item name="android:layout_height">wrap_content</item>
@@ -92,7 +120,21 @@
     <style name="EditorEntryBlockStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
+        <item name="android:layout_weight">2</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Editor Entry Block Style-->
+    <style name="EditorEntryBlockStyleAdditional">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- ScrollView Style -->
+    <style name="ScrollViewStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
         <item name="android:layout_weight">2</item>
     </style>
 

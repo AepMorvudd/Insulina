@@ -40,10 +40,9 @@ public final class InsulinaContract {
 
         /*
         Ammount of Insuline intake
-        Integer, can not be left empty
+        Double, can not be left empty
          */
-        public static final String COLUMN_INSULINA_INTAKE = "jednostki";
-        // TODO Change above input type to DOUBLE
+        public static final String COLUMN_INSULINA_INTAKE = "jednostkidojedzenia";
 
         /*
         Short description
@@ -55,6 +54,18 @@ public final class InsulinaContract {
         Ammount of glucose level 2h after eating
         Integer, optional entry
          */
-        public static final String COLUMN_INSULINA_GLUCOSE_2H_LATER = "cukier";
+        public static final String COLUMN_INSULINA_GLUCOSE_2H_LATER = "cukierpo";
+
+        /*
+        Glucose level prior eating
+        Integer, optional entry
+         */
+        public static final String COLUMN_GLUCOSE_BEFORE = "cukierprzed";
+
+        /*
+        Ammount of Insuline intake to get down the glucose level prior eating
+        Double, optional entry
+         */
+        public static final String COLUMN_INTAKE_TO_DOWN = "jednostkinazbicie";
     }
 }

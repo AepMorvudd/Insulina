@@ -149,10 +149,6 @@ public class InsulinaProvider extends ContentProvider {
         if(insrtion <= 0) {
             throw new IllegalArgumentException("Need to add insuline intake ammount");
         }
-        int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
-        if(latrGluco <= -1) {
-            throw new IllegalArgumentException("Need to add glucose level 2h later");
-        }
 
         // Get writable DB
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
@@ -178,10 +174,6 @@ public class InsulinaProvider extends ContentProvider {
         int insrtion = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_INTAKE);
         if(insrtion == 0) {
             throw new IllegalArgumentException("Need to add insuline intake ammount");
-        }
-        int latrGluco = values.getAsInteger(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
-        if(latrGluco <= -1) {
-            throw new IllegalArgumentException("Need to add glucose level 2h later");
         }
 
         // Gets writable DB
