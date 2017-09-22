@@ -8,7 +8,8 @@
     <dimen name="item_detail_major_height">60dp</dimen>
     <dimen name="item_name_and_desc_layout_margin">10dp</dimen>
     <dimen name="item_name_padding_left">10dp</dimen>
-    <dimen name="image_padding">16dp</dimen>
+    <dimen name="image_margin_top">16dp</dimen>
+    <dimen name="image_margin_sides">8dp</dimen>
     <dimen name="category_style_top_padding">16dp</dimen>
     <dimen name="fields_description_top_padding">16dp</dimen>
     <dimen name="main_screen_picture_height">60dp</dimen>

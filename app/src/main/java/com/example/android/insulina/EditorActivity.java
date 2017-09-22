@@ -104,6 +104,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     } else {
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_IMAGE);
                     }
+                } else {
+                    startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), PERMISSIONS_IMAGE);
                 }
             }
         });

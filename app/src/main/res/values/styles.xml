@@ -66,9 +66,11 @@
     <!-- Image Layout Syle -->
     <style name="ImageLayoutStyle">
         <item name="android:layout_height">@dimen/image_size</item>
-        <item name="android:layout_width">@dimen/image_size</item>
-        <item name="android:paddingTop">@dimen/image_padding</item>
-        <item name="android:paddingLeft">@dimen/image_padding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_marginTop">@dimen/image_margin_top</item>
+        <item name="android:layout_marginLeft">@dimen/image_margin_sides</item>
+        <item name="android:layout_marginRight">@dimen/image_margin_top</item>
     </style>
 
     <!-- Style for a category in the editor -->
@@ -180,5 +182,7 @@
         <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">8dp</item>
     </style>
 </resources>
