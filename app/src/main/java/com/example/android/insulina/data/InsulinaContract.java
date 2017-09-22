@@ -67,5 +67,11 @@ public final class InsulinaContract {
         Double, optional entry
          */
         public static final String COLUMN_INTAKE_TO_DOWN = "jednostkinazbicie";
+
+        /*
+        Image handling column
+        String, optional entry
+         */
+        public static final String COLUMN_ENTRY_IMAGE = "obraz";
     }
 }

@@ -30,4 +30,6 @@
     <string name="delete_dialog_message">Czy na prawdę chcesz usunąć ten wpis?</string>
     <string name="delete_confirmation">Kasuj</string>
     <string name="delete_deny">Anuluj</string>
+    <string name="permission_title">Wymagany dostęp</string>
+    <string name="permission_storage">Pamięć zewnętrzna</string>
 </resources>

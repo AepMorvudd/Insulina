@@ -18,7 +18,6 @@ import com.example.android.insulina.data.InsulinaContract;
 public class MainActivity extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int INSULINA_LOADER = 0;
-
     InsulinaCursorAdapter mCursorAdapter;
 
     @Override
@@ -58,11 +57,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Define a projection
         String[] projection = {
@@ -72,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION,
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER,
                 InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE,
-                InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN
+                InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN,
+                InsulinaContract.InsulinaEntry.COLUMN_ENTRY_IMAGE
         };
 
         return new CursorLoader(this,

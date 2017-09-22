@@ -1,35 +1,49 @@
 package com.example.android.insulina;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.insulina.data.InsulinaContract;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    EditText mNameEditText, mJednostkiEditText, mOpisEditText, mCukierEditText, mJednostkiNaZbicieEditText, mCukierPrzedEditText;
-
-    private Uri mCurrentInsulinaUri;
-
+    private EditText mNameEditText, mJednostkiEditText, mOpisEditText, mCukierEditText, mJednostkiNaZbicieEditText, mCukierPrzedEditText;
+    private ImageView mImageEdit;
+    private Uri mCurrentInsulinaUri, mImageUri;
     private static final int EXISTING_ENTRY_LOADER = 0;
+    private static final int PERMISSIONS_IMAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +71,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mCukierEditText = (EditText) findViewById(R.id.item_glucose_edit_text);
         mJednostkiNaZbicieEditText = (EditText) findViewById(R.id.intake_to_get_down);
         mCukierPrzedEditText = (EditText) findViewById(R.id.item_glucose_before);
+        mImageEdit = (ImageView) findViewById(R.id.item_image);
 
         // Hides keyboard when activity starts
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -66,6 +81,32 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mCukierEditText.setRawInputType(Configuration.KEYBOARD_QWERTY);
         mJednostkiNaZbicieEditText.setRawInputType(Configuration.KEYBOARD_12KEY);
         mCukierPrzedEditText.setRawInputType(Configuration.KEYBOARD_QWERTY);
+
+        mImageEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(EditorActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditorActivity.this);
+                        alertBuilder.setCancelable(true);
+                        alertBuilder.setTitle(R.string.permission_title);
+                        alertBuilder.setMessage(R.string.permission_storage + R.string.permission_title);
+
+                        alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(EditorActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_IMAGE);
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertBuilder.create();
+                        alertDialog.show();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_IMAGE);
+                    }
+                }
+            }
+        });
     }
 
     // Sets visibility of items description to gone
@@ -94,6 +135,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String cukierString = mCukierEditText.getText().toString().trim();
         String jednostkiNaZbicieString = mJednostkiNaZbicieEditText.getText().toString().trim();
         String cukierPrzedString = mCukierPrzedEditText.getText().toString().trim();
+        String imageString;
+        if (mImageUri == null) {
+            imageString = "";
+        } else {
+            imageString = mImageUri.toString().trim();
+        }
 
         // Checks if used set double values with ","
         // If he did changes it to "."
@@ -110,12 +157,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(jednostkiString)) {
             Toast.makeText(this, R.string.empty_values_toast, Toast.LENGTH_LONG).show();
         } else {
-            makeEntry(nameString, jednostkiString, opisString, cukierString, jednostkiNaZbicieString, cukierPrzedString);
+            makeEntry(nameString, jednostkiString, opisString, cukierString, jednostkiNaZbicieString, cukierPrzedString, imageString);
         }
     }
 
     // Makes DB Entry or update
-    private void makeEntry(String name, String jednostki, String opis, String glukoza, String jednostkiNaZbicie, String glukozaPrzed) {
+    private void makeEntry(String name, String jednostki, String opis, String glukoza, String jednostkiNaZbicie, String glukozaPrzed, String imageString) {
         int cukier;
         if ("".equals(glukoza)) {
             cukier = 0;
@@ -145,6 +192,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER, cukier);
         values.put(InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN, jednostkiNaObniżenie);
         values.put(InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE, cukierPrzed);
+
+        Bitmap icLauncher = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add_a_photo_black_48dp);
+        Bitmap bitmap = ((BitmapDrawable) mImageEdit.getDrawable()).getBitmap();
+        if (!equals(icLauncher, bitmap) && imageString != null) {
+            values.put(InsulinaContract.InsulinaEntry.COLUMN_ENTRY_IMAGE, imageString);
+        }
 
         // Determine if this is a new entry or not
         if (mCurrentInsulinaUri == null) {
@@ -214,7 +267,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION,
                 InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER,
                 InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE,
-                InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN
+                InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN,
+                InsulinaContract.InsulinaEntry.COLUMN_ENTRY_IMAGE
         };
 
         return new CursorLoader(this,
@@ -241,6 +295,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int laterColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER);
             int insulinaPrzedColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN);
             int cukierPrzedColumnIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE);
+            int imageIndex = cursor.getColumnIndex(InsulinaContract.InsulinaEntry.COLUMN_ENTRY_IMAGE);
 
             // Extract out the values for the given column index
             String name = cursor.getString(nameColumnIndex);
@@ -249,6 +304,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int later = cursor.getInt(laterColumnIndex);
             double insulinaPrzed = cursor.getDouble(insulinaPrzedColumnIndex);
             int cukierPrzed = cursor.getInt(cukierPrzedColumnIndex);
+            String image = cursor.getString(imageIndex);
 
             String laterString, intakePrior, glucosePrior;
             /*
@@ -279,6 +335,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mCukierEditText.setText(laterString);
             mJednostkiNaZbicieEditText.setText(intakePrior);
             mCukierPrzedEditText.setText(glucosePrior);
+            Log.v("EditorActivity", "image = " + image);
+            if (image != null) {
+                mImageUri = Uri.parse(image);
+                mImageEdit.setImageURI(mImageUri);
+            }
         }
     }
 
@@ -289,6 +350,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mJednostkiEditText.setText("");
         mOpisEditText.setText("");
         mCukierEditText.setText("");
+        mJednostkiNaZbicieEditText.setText("");
+        mCukierPrzedEditText.setText("");
     }
 
     // Show a dialog for user to confirm if he really wants to delete an entry
@@ -334,5 +397,44 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Close the activity
         finish();
+    }
+
+    private boolean equals(Bitmap icLauncher, Bitmap bitmap) {
+
+        ByteBuffer buffer1 = ByteBuffer.allocate(icLauncher.getHeight() * icLauncher.getRowBytes());
+        icLauncher.copyPixelsToBuffer(buffer1);
+
+        ByteBuffer buffer2 = ByteBuffer.allocate(bitmap.getHeight() * bitmap.getRowBytes());
+        bitmap.copyPixelsToBuffer(buffer2);
+
+        return Arrays.equals(buffer1.array(), buffer2.array());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PERMISSIONS_IMAGE && resultCode == Activity.RESULT_OK) {
+
+            if (data != null) {
+                mImageUri = data.getData();
+                mImageEdit.setImageURI(mImageUri);
+                mImageEdit.invalidate();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_IMAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), PERMISSIONS_IMAGE);
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

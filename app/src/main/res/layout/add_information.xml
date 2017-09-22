@@ -12,10 +12,8 @@
                 android:text="@string/editor_heading_basic" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="24dp"
-                android:layout_gravity="center"
+                android:id="@+id/item_image"
+                style="@style/ImageLayoutStyle"
                 android:src="@drawable/ic_add_a_photo_black_48dp"/>
         </LinearLayout>
 

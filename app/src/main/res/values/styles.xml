@@ -16,7 +16,6 @@
     </style>
 
     <!-- Main Activity Layout Styles-->
-
     <style name="MainActivityMajorStyle">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
@@ -56,19 +55,27 @@
     <!-- Style for a category in the editor -->
     <style name="CategoryStyle">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingTop">@dimen/category_style_top_padding</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <!-- Image Layout Syle -->
+    <style name="ImageLayoutStyle">
+        <item name="android:layout_height">@dimen/image_size</item>
+        <item name="android:layout_width">@dimen/image_size</item>
+        <item name="android:paddingTop">@dimen/image_padding</item>
+        <item name="android:paddingLeft">@dimen/image_padding</item>
     </style>
 
     <!-- Style for a category in the editor -->
     <style name="CategoryStylePrimary">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingTop">@dimen/category_style_top_padding</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
@@ -77,7 +84,7 @@
     <!-- Primary information and image layout Style -->
     <style name="ImageAndInformationPrimaryLayoutStyle">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -86,7 +93,7 @@
     <style name="FliedsDescriptionStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingTop">@dimen/fields_description_top_padding</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
@@ -166,5 +173,12 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:layout_margin">@dimen/item_name_and_desc_layout_margin</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ItemImageStyle">
+        <item name="android:layout_height">@dimen/main_screen_picture_height</item>
+        <item name="android:layout_width">@dimen/zero_dp_weight_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 </resources>

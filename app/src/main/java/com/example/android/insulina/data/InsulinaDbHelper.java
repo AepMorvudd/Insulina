@@ -24,7 +24,8 @@ public class InsulinaDbHelper extends SQLiteOpenHelper{
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_DESCRIPTION + " TEXT, "
                 + InsulinaContract.InsulinaEntry.COLUMN_INSULINA_GLUCOSE_2H_LATER + " INTEGER NOT NULL DEFAULT 0, "
                 + InsulinaContract.InsulinaEntry.COLUMN_GLUCOSE_BEFORE + " INTEGER NOT NULL DEFAULT 0, "
-                + InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN + " DOUBLE NOT NULL DEFAULT 0.0);";
+                + InsulinaContract.InsulinaEntry.COLUMN_INTAKE_TO_DOWN + " DOUBLE NOT NULL DEFAULT 0.0, "
+                + InsulinaContract.InsulinaEntry.COLUMN_ENTRY_IMAGE + " TEXT);";
 
         db.execSQL(SQL_CREATE_ENTRIES);
     }
